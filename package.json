@@ -1,0 +1,311 @@
+{
+    "name": "compose-visual",
+    "displayName": "Compose Visual",
+    "description": "Track your docker-compose lifecycle via a dependency tree and status bar.",
+    "version": "0.0.1",
+    "publisher": "hadi-hajihosseini",
+    "engines": {
+        "vscode": "^1.93.0"
+    },
+    "keywords": [
+        "docker",
+        "docker-compose",
+        "container",
+        "compose",
+        "devops",
+        "visualization",
+        "dependency-tree"
+    ],
+    "categories": [
+        "Visualization",
+        "Other"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "compose-visual-sidebar",
+                    "title": "Compose Visual",
+                    "icon": "$(graph)"
+                }
+            ]
+        },
+        "views": {
+            "compose-visual-sidebar": [
+                {
+                    "type": "webview",
+                    "id": "composeVisual.treeView",
+                    "name": "Live Dependency Tree"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "Compose Visual",
+            "properties": {
+                "composeVisual.autoTrackOnComposeUp": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Automatically start tracking when a docker compose up command is detected in an integrated terminal.",
+                    "order": 1
+                },
+                "composeVisual.autoDiscoverRunningStack": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Periodically check docker compose ls for a running stack in this workspace and attach tracking when idle.",
+                    "order": 2
+                },
+                "composeVisual.discoveryPollIntervalSeconds": {
+                    "type": "number",
+                    "default": 6,
+                    "minimum": 2,
+                    "maximum": 120,
+                    "description": "How often (seconds) to poll for a running compose stack when auto-discover is enabled.",
+                    "order": 3
+                },
+                "composeVisual.composeFile": {
+                    "type": "string",
+                    "default": "",
+                    "markdownDescription": "Workspace-relative path to the compose file for this project (for example `docker-compose.dev.yml`). Updated automatically when you pick a file in the sidebar; also stored in `.composeVisual/sidebar-settings.json`. Leave empty to detect from the terminal or running stack only.",
+                    "order": 4
+                },
+                "composeVisual.defaultComposeFilePatterns": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "default": [
+                        "compose.yaml",
+                        "compose.yml",
+                        "docker-compose.yaml",
+                        "docker-compose.yml"
+                    ],
+                    "markdownDescription": "Filenames tried in order when resolving the compose file (terminal cwd, then workspace root). Add variants such as `docker-compose.dev.yml` to prefer them over the default file.",
+                    "order": 5
+                },
+                "composeVisual.projectName": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Override the Docker Compose project name (-p) used for tracking and logs when the terminal command does not specify one.",
+                    "order": 6
+                },
+                "composeVisual.envFiles": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "default": [],
+                    "markdownDescription": "Extra `--env-file` paths (workspace-relative) merged into logs and tracking commands, in addition to files from the sniffed terminal command.",
+                    "order": 7
+                },
+                "composeVisual.terminalSnifferPatterns": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "default": [],
+                    "markdownDescription": "Optional regex patterns (case-insensitive) matched against terminal lines. When a line matches but is not a standard `compose up`, tracking still starts (compose file is resolved from the running stack or workspace).",
+                    "order": 8
+                },
+                "composeVisual.healthPollIntervalSeconds": {
+                    "type": "number",
+                    "default": 3,
+                    "minimum": 1,
+                    "maximum": 60,
+                    "description": "How often (seconds) to reconcile container health via docker inspect while tracking.",
+                    "order": 20
+                },
+                "composeVisual.reconcileOnTerminalClose": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "When the terminal that ran compose up is closed, immediately reconcile container states (mark missing containers as stopped).",
+                    "order": 21
+                },
+                "composeVisual.markHealthyWhen": {
+                    "type": "string",
+                    "enum": ["healthy", "running"],
+                    "default": "healthy",
+                    "enumDescriptions": [
+                        "Count a service as up only after Docker healthcheck reports healthy (or no healthcheck and container is running).",
+                        "Count a service as up as soon as the container is running, before healthcheck completes."
+                    ],
+                    "description": "When a service counts as up for the status bar and dependency unlock.",
+                    "order": 22
+                },
+                "composeVisual.showComposeRunButton": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show the Run button in the sidebar header to start docker compose up for the selected compose file.",
+                    "order": 28
+                },
+                "composeVisual.composeRunExtraArgs": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Extra arguments after `-f <compose file>` when using the Run button (e.g. `--env-file .env.dev up -d`). The extension adds the compose file path.",
+                    "order": 29
+                },
+                "composeVisual.showBootTimer": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show boot timer on each container card (seconds until healthy after dependencies are ready).",
+                    "order": 30
+                },
+                "composeVisual.showLogsButton": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show log button on each container card. Opens that container's logs in a terminal (docker logs).",
+                    "order": 31
+                },
+                "composeVisual.showPortButtons": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show port link buttons on container cards when the service is up (opens localhost URLs).",
+                    "order": 32
+                },
+                "composeVisual.showLegend": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show the status color legend below the dependency tree.",
+                    "order": 33
+                },
+                "composeVisual.showDependencyList": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show which services each container depends on, on the card.",
+                    "order": 34
+                },
+                "composeVisual.gridColumns": {
+                    "type": "string",
+                    "enum": ["2", "3", "auto"],
+                    "default": "auto",
+                    "enumDescriptions": [
+                        "Always two service cards per row.",
+                        "Always three service cards per row.",
+                        "Two columns on narrow panels, three on wider panels."
+                    ],
+                    "description": "Number of service cards per row in the dependency tree.",
+                    "order": 35
+                },
+                "composeVisual.tierSeparator": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show horizontal divider lines between dependency tiers.",
+                    "order": 36
+                },
+                "composeVisual.showServiceLinksWhen": {
+                    "type": "string",
+                    "enum": ["healthy", "running", "healthcheck"],
+                    "default": "healthy",
+                    "enumDescriptions": [
+                        "Show link buttons only when the service is healthy.",
+                        "Show links when the container is running (before healthcheck completes).",
+                        "Show links during the healthcheck phase as well."
+                    ],
+                    "description": "Minimum service state required before service link buttons appear.",
+                    "order": 37
+                },
+                "composeVisual.logsShellReadyDelayMs": {
+                    "type": "number",
+                    "default": 900,
+                    "minimum": 0,
+                    "maximum": 10000,
+                    "description": "Extra milliseconds to wait before docker logs when shell integration is unavailable (logs normally start immediately via shell integration). Used as a fallback for compose up and legacy sendText.",
+                    "order": 40
+                },
+                "composeVisual.reuseLogsTerminal": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Reuse one integrated terminal per service for logs. When false, each Logs click opens a new terminal.",
+                    "order": 41
+                },
+                "composeVisual.logsFollow": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Pass -f to docker logs to stream logs. When false, prints a one-shot snapshot (last 200 lines).",
+                    "order": 42
+                },
+                "composeVisual.showStatusBarProgress": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show the segmented progress bar in the status bar while tracking.",
+                    "order": 50
+                },
+                "composeVisual.statusBarPriority": {
+                    "type": "number",
+                    "default": 100,
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "description": "Priority of the Compose Visual status bar item (higher values appear further left).",
+                    "order": 51
+                },
+                "composeVisual.notifyWhenStackReady": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show an information message when all tracked services have reached the configured up state.",
+                    "order": 52
+                },
+                "composeVisual.serviceLinks": {
+                    "type": "object",
+                    "default": {},
+                    "markdownDescription": "Map compose **service names** to URLs shown as buttons when a service reaches the state configured in `composeVisual.showServiceLinksWhen`.\n\nExample:\n```json\n{\n  \"frontend\": [{ \"label\": \"localhost:3000\", \"url\": \"http://localhost:3000\" }],\n  \"backend\": [{ \"label\": \"API\", \"url\": \"http://localhost:8000\" }],\n  \"nginx\": \"http://localhost\"\n}\n```\n\nShorthand: a string or array of strings is allowed (`localhost:3000` becomes `http://localhost:3000`).",
+                    "order": 60
+                },
+                "composeVisual.openLinksInExternalBrowser": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Open service link buttons in the system browser. When false, links open in the editor Simple Browser.",
+                    "order": 61
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "composeVisual.statusBarClick",
+                "title": "Compose Visual: Open or Track",
+                "category": "Compose Visual"
+            },
+            {
+                "command": "composeVisual.focusSidebar",
+                "title": "Compose Visual: Open Sidebar",
+                "category": "Compose Visual"
+            },
+            {
+                "command": "composeVisual.openSettings",
+                "title": "Compose Visual: Open Settings",
+                "category": "Compose Visual"
+            },
+            {
+                "command": "composeVisual.trackWorkspace",
+                "title": "Compose Visual: Track Compose Stack",
+                "category": "Compose Visual"
+            },
+            {
+                "command": "composeVisual.trackRunningStack",
+                "title": "Compose Visual: Track Running Stack",
+                "category": "Compose Visual"
+            },
+            {
+                "command": "composeVisual.stopTracking",
+                "title": "Compose Visual: Stop Tracking",
+                "category": "Compose Visual"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "lint": "eslint src --ext ts",
+        "package": "vsce package"
+    },
+    "devDependencies": {
+        "@types/js-yaml": "^4.0.9",
+        "@types/node": "^18.x.x",
+        "@types/vscode": "^1.93.0",
+        "@typescript-eslint/eslint-plugin": "^7.x",
+        "@typescript-eslint/parser": "^7.x",
+        "@vscode/vsce": "^3.x",
+        "eslint": "^9.x",
+        "typescript": "^5.x.x"
+    },
+    "dependencies": {
+        "js-yaml": "^4.2.0"
+    }
+}

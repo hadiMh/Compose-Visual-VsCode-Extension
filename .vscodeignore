@@ -1,0 +1,16 @@
+.vscode/**
+.vscode-test/**
+node_modules/**
+src/**
+.git/**
+.github/**
+.claude/**
+.cursor/**
+*.ts
+!out/**
+tsconfig.json
+**/*.map
+**/.DS_Store
+**/*.vsix
+.env*
+.composeVisual/**
