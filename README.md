@@ -2,7 +2,7 @@
 
 > See your **docker compose** stack boot in dependency order — live health, ports, and logs — inside VS Code and Cursor.
 
-[put a picture of the sidebar showing the live dependency tree with several services in different states (pending, running, healthy)]
+<img width="1476" height="988" alt="Screenshot 1405-03-13 at 22 24 02" src="https://github.com/user-attachments/assets/d3523d79-70ad-44d5-a23e-2b44f29351bc" />
 
 Stop guessing which service is blocking the rest. **Compose Visual** parses your compose file, lays out services by dependency tier, and updates each card as containers move through creating → starting → healthcheck → healthy. Dependencies light up when their parents are ready, so you can see *why* something is still waiting.
 
@@ -37,7 +37,8 @@ Works in **Visual Studio Code** (1.93+) and **Cursor**.
 - **Run / Stop (optional)** — Start or stop the stack from the sidebar without leaving the editor.
 - **Sidebar settings** — Grid columns, legend, logs button, dependency list, and more — saved per workspace.
 
-[put a picture of a single service card close-up showing name, dependency list, port button, and logs/settings icons]
+<img width="151" height="164" alt="Screenshot 1405-03-13 at 23 19 23" src="https://github.com/user-attachments/assets/85952373-e71a-4766-807d-359fd20800be" /><img width="476" height="498" alt="Screenshot 1405-03-13 at 23 20 40" src="https://github.com/user-attachments/assets/8168f84f-a468-457b-97be-6a460a07610b" />
+
 
 ---
 
@@ -63,7 +64,7 @@ Works in **Visual Studio Code** (1.93+) and **Cursor**.
    ```
 5. Tracking starts automatically when `dockerComposeFlow.autoTrackOnComposeUp` is enabled (default), or use **Compose Visual: Track Running Stack** from the Command Palette.
 
-[put a picture of the empty/bootstrap state with “Select YAML file” or the activity bar icon highlighted]
+<img width="476" height="498" alt="Screenshot 1405-03-13 at 23 20 40" src="https://github.com/user-attachments/assets/a172929f-8ca1-4e3d-9bf7-9f49a9ef1fda" />
 
 Click the **status bar** item to open the sidebar or choose a compose file. Click a service’s **logs** icon to stream container logs.
 
@@ -84,7 +85,7 @@ compose.yaml  →  parse depends_on tiers  →  poll docker inspect
 3. **Reconcile** — Polls health on an interval; optional immediate reconcile when the compose terminal closes.
 4. **Unlock** — A service’s “can run” state reflects whether dependency conditions are met, so cards pulse when they become runnable.
 
-[put a picture of the status bar showing segmented progress while the stack is still starting]
+<img width="328" height="24" alt="Screenshot 1405-03-13 at 23 21 22" src="https://github.com/user-attachments/assets/95e77b2f-c85a-427f-8f8c-18a2111f187c" />
 
 ### Service states (legend)
 
@@ -168,7 +169,7 @@ All settings live under **`dockerComposeFlow.*`**. Open Settings and search for 
 
 Per-project links can also be edited from each card’s **settings** icon; they are stored in `.dockerComposeFlow/service-links.json`.
 
-[put a picture of port/link buttons under the dependency list on a healthy service card]
+<img width="151" height="164" alt="Screenshot 1405-03-13 at 23 19 23" src="https://github.com/user-attachments/assets/692773e4-e961-4c09-b799-b7a480e6c4d4" />
 
 ---
 
