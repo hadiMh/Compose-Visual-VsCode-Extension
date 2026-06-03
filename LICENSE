@@ -1,0 +1,62 @@
+Compose Visual Source License
+Version 1.0, June 2026
+
+Copyright (c) 2026 Hadi Hajihosseini. All rights reserved.
+
+Compose Visual was created by Hadi Hajihosseini.
+
+You may use, study, modify, and run this software for your own purposes,
+including in private or internal environments, subject to the terms below.
+
+## Permissions
+
+1. **Personal and internal use** — You may clone, build, install, and run
+   this extension from source for yourself or your organization.
+
+2. **Modification** — You may change the source code for your own use.
+
+3. **Contributions** — You may propose improvements by opening pull requests
+   against the official upstream repository. By submitting a pull request,
+   you grant the copyright holder a perpetual, worldwide, non-exclusive,
+   royalty-free license to use, merge, and distribute your contribution as
+   part of this project under this license.
+
+## Restrictions
+
+You may **not**, without prior written permission from the copyright holder:
+
+1. **Publish or redistribute as an extension** — Publish, ship, or
+   distribute this software (or any derivative) as an extension, plugin,
+   or add-on for **any code editor or IDE** (including but not limited to
+   Visual Studio Code, Cursor, JetBrains IDEs, Vim, Neovim, Emacs, Sublime
+   Text, Zed, or any successor), via any marketplace, registry, package
+   gallery, Open VSX, `.vsix`, or other public distribution channel, under
+   any name or publisher id.
+
+2. **Commercial republication** — Sell, sublicense, or offer hosted copies
+   of this software or derivatives primarily as a competing extension or
+   plugin product for any editor or IDE.
+
+3. **Remove notices** — Remove or obscure copyright, license, or
+   attribution notices in source or distributed copies you are otherwise
+   permitted to keep.
+
+Forks for local development and pull requests to improve the upstream
+project are welcome. Forks must not be published to any editor or IDE
+marketplace, registry, or public plugin channel unless the copyright holder
+explicitly allows it.
+
+## No warranty
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Questions
+
+For licensing exceptions (e.g. permission to publish a fork), contact the
+copyright holder via the repository’s issue tracker.

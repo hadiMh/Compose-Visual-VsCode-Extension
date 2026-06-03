@@ -3,6 +3,10 @@
     "displayName": "Compose Visual",
     "description": "Track your docker-compose lifecycle via a dependency tree and status bar.",
     "version": "0.0.1",
+    "license": "SEE LICENSE IN LICENSE",
+    "author": {
+        "name": "Hadi Hajihosseini"
+    },
     "publisher": "hadi-hajihosseini",
     "engines": {
         "vscode": "^1.93.0"

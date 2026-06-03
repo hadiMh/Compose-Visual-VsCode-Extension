@@ -1,5 +1,7 @@
 # Compose Visual
 
+**Created by Hadi Hajihosseini.**
+
 > See your **docker compose** stack boot in dependency order — live health, ports, and logs — inside VS Code and Cursor.
 > 
 <img width="1636" height="1080" alt="running_with_terminal" src="https://github.com/user-attachments/assets/1d3480a1-fdd7-4f47-b751-30bb56078a2f" />
@@ -219,10 +221,20 @@ Produces a `.vsix` for local install. `out/` must be compiled first; `src/` is e
 
 ---
 
-## Feedback
+## License
 
-Found a bug or have an idea? [Open an issue](https://github.com/YOUR_ORG/docker-compose-flow/issues) on GitHub.
+Copyright © 2026 **Hadi Hajihosseini**. **Compose Visual Source License** (see [LICENSE](LICENSE)).
+
+- You may **use, modify, and run** this project for yourself or your team.
+- **Contributions** are welcome via **pull requests** to the official repository.
+- You may **not publish** this code (or derivatives) as an extension or plugin for **any editor or IDE** (VS Code, Cursor, JetBrains, Vim/Neovim, etc.) on any marketplace or registry without permission from the copyright holder.
 
 ---
 
-**Compose Visual** — clarity for multi-service local development, without leaving the editor.
+## Feedback
+
+Found a bug or have an idea? Open an issue or pull request on the project repository.
+
+---
+
+**Compose Visual** — created by Hadi Hajihosseini. Clarity for multi-service local development, without leaving the editor.
