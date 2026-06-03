@@ -1,13 +1,13 @@
 # Dependencies
 node_modules/
 
-# TypeScript / build
+# TypeScript / build (compiled extension host code)
 out/
 dist/
 build/
 *.tsbuildinfo
 
-# VS Code extension
+# VS Code extension packaging & integration tests
 *.vsix
 .vscode-test/
 .vscode-test-user-data/
@@ -35,8 +35,12 @@ coverage/
 credentials.json
 secrets.json
 
-# Workspace data created when dogfooding this extension locally
+# Runtime data when dogfooding this extension locally
 .composeVisual/
+
+# Local marketplace / promo scratch (screenshots, recordings, editor projects)
+# Commit only curated assets under assets/ (e.g. icon.png).
+publish media/
 
 # OS
 .DS_Store
@@ -46,7 +50,7 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# Editor / IDE (keep shared .vscode/launch.json; ignore personal prefs)
+# Editor / IDE — keep shared VS Code config; ignore personal settings
 .vscode/*
 !.vscode/launch.json
 !.vscode/tasks.json
@@ -56,11 +60,11 @@ Desktop.ini
 *.swo
 *~
 
-# Cursor / Claude local agent tooling (optional local-only)
+# Cursor / Claude local agent tooling
 .cursor/
 .claude/
 
-# Misc caches
+# Tool caches
 .eslintcache
 .prettiercache
 .cache/
