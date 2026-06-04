@@ -1,12 +1,12 @@
-# Compose Visual
+# DockerComposeVisualizer
 
 **Created by Hadi Hajihosseini.**
 
 > See your **docker compose** stack boot in dependency order — live health, ports, and logs — inside VS Code and Cursor.
 > 
-<img width="1636" height="1080" alt="running_with_terminal" src="https://github.com/user-attachments/assets/1d3480a1-fdd7-4f47-b751-30bb56078a2f" />
+<img width="1920" height="1080" alt="running_with_terminal" src="https://github.com/user-attachments/assets/1d3480a1-fdd7-4f47-b751-30bb56078a2f" style="width: 100%; max-width: 1920px; height: auto;" />
 
-Stop guessing which service is blocking the rest. **Compose Visual** parses your compose file, lays out services by dependency tier, and updates each card as containers move through creating → starting → healthcheck → healthy. Dependencies light up when their parents are ready, so you can see *why* something is still waiting.
+Stop guessing which service is blocking the rest. **DockerComposeVisualizer** parses your compose file, lays out services by dependency tier, and updates each card as containers move through creating → starting → healthcheck → healthy. Dependencies light up when their parents are ready, so you can see *why* something is still waiting.
 
 Works in **Visual Studio Code** (1.93+) and **Cursor**.
 
@@ -29,7 +29,8 @@ Works in **Visual Studio Code** (1.93+) and **Cursor**.
 ## Features
 
 - **Live dependency tree** — Services grouped by `depends_on` tiers with color-coded states and optional tier dividers.
-<img width="180" height="440" alt="running_sidebar" src="https://github.com/user-attachments/assets/86e1e289-f6c2-4f6c-b6c8-beebaff41345" />
+
+<img width="270" height="660" alt="running_sidebar" src="https://github.com/user-attachments/assets/86e1e289-f6c2-4f6c-b6c8-beebaff41345" />
 
 - **Per-service dependency list** — See which upstream services each card is waiting on, with running / in-progress / not-started indicators.
 - **Auto-track on `compose up`** — Detects `docker compose up` (and custom patterns) in integrated terminals and starts tracking automatically.
@@ -69,12 +70,12 @@ Works in **Visual Studio Code** (1.93+) and **Cursor**.
 
 1. **Install** the extension (from the marketplace when published, or see [Development](#development) to run from source).
 2. **Open a workspace** that contains your compose YAML.
-3. Open the **Compose Visual** view on the activity bar (graph icon).
+3. Open the **DockerComposeVisualizer** view on the activity bar (graph icon).
 4. **Pick a compose file** if prompted, or run your stack:
    ```bash
    docker compose -f docker-compose.yml up
    ```
-5. Tracking starts automatically when `dockerComposeFlow.autoTrackOnComposeUp` is enabled (default), or use **Compose Visual: Track Running Stack** from the Command Palette.
+5. Tracking starts automatically when `dockerComposeFlow.autoTrackOnComposeUp` is enabled (default), or use **DockerComposeVisualizer: Track Running Stack** from the Command Palette.
 
 Click the **status bar** item to open the sidebar or choose a compose file. Click a service’s **logs** icon to stream container logs.
 
@@ -111,22 +112,22 @@ compose.yaml  →  parse depends_on tiers  →  poll docker inspect
 
 ## Commands
 
-Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and search for **Compose Visual**.
+Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and search for **DockerComposeVisualizer**.
 
 | Command | Description |
 |---------|-------------|
-| **Compose Visual: Open or Track** | Status bar action — open sidebar or start tracking |
-| **Compose Visual: Open Sidebar** | Focus the Live Dependency Tree view |
-| **Compose Visual: Open Settings** | Jump to `dockerComposeFlow.*` in Settings |
-| **Compose Visual: Track Compose Stack** | Pick a compose file and prepare tracking |
-| **Compose Visual: Track Running Stack** | Attach to an already-running project |
-| **Compose Visual: Stop Tracking** | Clear tracking and status bar |
+| **DockerComposeVisualizer: Open or Track** | Status bar action — open sidebar or start tracking |
+| **DockerComposeVisualizer: Open Sidebar** | Focus the Live Dependency Tree view |
+| **DockerComposeVisualizer: Open Settings** | Jump to `dockerComposeFlow.*` in Settings |
+| **DockerComposeVisualizer: Track Compose Stack** | Pick a compose file and prepare tracking |
+| **DockerComposeVisualizer: Track Running Stack** | Attach to an already-running project |
+| **DockerComposeVisualizer: Stop Tracking** | Clear tracking and status bar |
 
 ---
 
 ## Configuration
 
-All settings live under **`dockerComposeFlow.*`**. Open Settings and search for `Compose Visual`, or edit `settings.json`.
+All settings live under **`dockerComposeFlow.*`**. Open Settings and search for `DockerComposeVisualizer`, or edit `settings.json`.
 
 ### Tracking & discovery
 
@@ -223,7 +224,7 @@ Produces a `.vsix` for local install. `out/` must be compiled first; `src/` is e
 
 ## License
 
-Copyright © 2026 **Hadi Hajihosseini**. **Compose Visual Source License** (see [LICENSE](LICENSE)).
+Copyright © 2026 **Hadi Hajihosseini**. **DockerComposeVisualizer Source License** (see [LICENSE](LICENSE)).
 
 - You may **use, modify, and run** this project for yourself or your team.
 - **Contributions** are welcome via **pull requests** to the official repository.
@@ -237,4 +238,4 @@ Found a bug or have an idea? Open an issue or pull request on the project reposi
 
 ---
 
-**Compose Visual** — created by Hadi Hajihosseini. Clarity for multi-service local development, without leaving the editor.
+**DockerComposeVisualizer** — created by Hadi Hajihosseini. Clarity for multi-service local development, without leaving the editor.
