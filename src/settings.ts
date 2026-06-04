@@ -74,7 +74,7 @@ export function getWebviewSettings(): WebviewSettingsPayload {
 export async function saveWebviewSettings(settings: WebviewSettingsPayload): Promise<void> {
     const workspaceRoot = getWorkspaceRoot();
     if (!workspaceRoot) {
-        throw new Error('Open a workspace folder to save Compose Visual settings.');
+        throw new Error('Open a workspace folder to save DockerComposeVisualizer settings.');
     }
     const existing = readProjectSidebarSettings(workspaceRoot);
     await writeProjectSidebarSettings(workspaceRoot, {
@@ -274,7 +274,7 @@ async function releaseWebviewFocus(): Promise<void> {
 }
 
 /**
- * Open Compose Visual settings (filtered to composeVisual.*).
+ * Open DockerComposeVisualizer settings (filtered to composeVisual.*).
  */
 export async function openComposeFlowSettings(): Promise<void> {
     await releaseWebviewFocus();

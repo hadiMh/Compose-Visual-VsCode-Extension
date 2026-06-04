@@ -40,7 +40,7 @@ export function runComposeUpInHiddenTerminal(
     const parsed = parseComposeAppendArgs(extraArgs);
 
     const terminal = vscode.window.createTerminal({
-        name: `Compose Visual · ${path.basename(composeFile)}`,
+        name: `DockerComposeVisualizer · ${path.basename(composeFile)}`,
         cwd: composeDir,
         hideFromUser: true,
     });
@@ -84,7 +84,7 @@ export function runComposeDownInHiddenTerminal(
     const command = buildComposeDownCommand(composeFile, projectName, envFiles);
 
     const terminal = vscode.window.createTerminal({
-        name: `Compose Visual · down`,
+        name: `DockerComposeVisualizer · down`,
         cwd: composeDir,
         hideFromUser: true,
     });

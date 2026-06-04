@@ -126,7 +126,7 @@ export function buildServiceLinksMap(serviceNames: string[]): Record<string, Ser
 export async function openServiceUrl(url: string, forceExternal = false): Promise<void> {
     const normalized = normalizeOpenUrl(url);
     if (!normalized) {
-        void vscode.window.showWarningMessage('Compose Visual: invalid link URL.');
+        void vscode.window.showWarningMessage('DockerComposeVisualizer: invalid link URL.');
         return;
     }
 
@@ -143,7 +143,7 @@ export async function openServiceUrl(url: string, forceExternal = false): Promis
     if (external) {
         const ok = await openInBrowser();
         if (!ok) {
-            void vscode.window.showWarningMessage(`Compose Visual: could not open ${normalized}`);
+            void vscode.window.showWarningMessage(`DockerComposeVisualizer: could not open ${normalized}`);
         }
         return;
     }
@@ -153,7 +153,7 @@ export async function openServiceUrl(url: string, forceExternal = false): Promis
     } catch {
         const ok = await openInBrowser();
         if (!ok) {
-            void vscode.window.showWarningMessage(`Compose Visual: could not open ${normalized}`);
+            void vscode.window.showWarningMessage(`DockerComposeVisualizer: could not open ${normalized}`);
         }
     }
 }

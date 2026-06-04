@@ -59,7 +59,7 @@ export class ComposeDiscoveryService {
             if (notify) {
                 const vscode = await import('vscode');
                 vscode.window.showInformationMessage(
-                    'Compose Visual: no running compose stack found for this workspace. Start with `docker compose -f <file> up` or click the status bar to pick a file.'
+                    'DockerComposeVisualizer: no running compose stack found for this workspace. Start with `docker compose -f <file> up` or click the status bar to pick a file.'
                 );
             }
             return;
@@ -75,7 +75,7 @@ export class ComposeDiscoveryService {
         if (notify) {
             const vscode = await import('vscode');
             vscode.window.showInformationMessage(
-                `Compose Visual: tracking running stack "${match.name}" (${path.basename(composePath)}).`
+                `DockerComposeVisualizer: tracking running stack "${match.name}" (${path.basename(composePath)}).`
             );
         }
     }

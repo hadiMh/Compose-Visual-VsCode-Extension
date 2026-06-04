@@ -76,7 +76,7 @@ export class ComposeTrackingCoordinator {
         private readonly context: vscode.ExtensionContext,
         private readonly statusBar: StatusBarService
     ) {
-        this.outputChannel = vscode.window.createOutputChannel('Compose Visual');
+        this.outputChannel = vscode.window.createOutputChannel('DockerComposeVisualizer');
         context.subscriptions.push(this.outputChannel);
 
         this.discoveryService = new ComposeDiscoveryService(
@@ -113,7 +113,7 @@ export class ComposeTrackingCoordinator {
             }
             const workspaceRoot = this.getWorkspaceRoot();
             if (!workspaceRoot) {
-                vscode.window.showWarningMessage('Compose Visual: open a workspace folder to track compose.');
+                vscode.window.showWarningMessage('DockerComposeVisualizer: open a workspace folder to track compose.');
                 return;
             }
             this.trackedComposeTerminal = terminal;
@@ -238,7 +238,7 @@ export class ComposeTrackingCoordinator {
     async openLogs(serviceName: string): Promise<void> {
         const tree = this.activeTree;
         if (!tree) {
-            vscode.window.showWarningMessage('Compose Visual: start tracking a stack before opening logs.');
+            vscode.window.showWarningMessage('DockerComposeVisualizer: start tracking a stack before opening logs.');
             return;
         }
         try {
@@ -249,14 +249,14 @@ export class ComposeTrackingCoordinator {
             });
         } catch (err) {
             const message = err instanceof Error ? err.message : String(err);
-            vscode.window.showErrorMessage(`Compose Visual: ${message}`);
+            vscode.window.showErrorMessage(`DockerComposeVisualizer: ${message}`);
         }
     }
 
     async pickComposeFile(): Promise<void> {
         const workspaceRoot = this.getWorkspaceRoot();
         if (!workspaceRoot) {
-            vscode.window.showWarningMessage('Compose Visual: open a workspace folder first.');
+            vscode.window.showWarningMessage('DockerComposeVisualizer: open a workspace folder first.');
             return;
         }
 
@@ -269,7 +269,7 @@ export class ComposeTrackingCoordinator {
                 files = discoverComposeFilesInWorkspace(workspaceRoot);
             }
             if (files.length === 0) {
-                vscode.window.showWarningMessage('Compose Visual: no compose YAML files found in the workspace root.');
+                vscode.window.showWarningMessage('DockerComposeVisualizer: no compose YAML files found in the workspace root.');
                 return;
             }
 
@@ -279,7 +279,7 @@ export class ComposeTrackingCoordinator {
                     description: path.relative(workspaceRoot, path.dirname(f)) || '.',
                     fullPath: f,
                 })),
-                { title: 'Compose Visual', placeHolder: 'Select compose file (e.g. docker-compose.dev.yml)' }
+                { title: 'DockerComposeVisualizer', placeHolder: 'Select compose file (e.g. docker-compose.dev.yml)' }
             );
             if (!selected) {
                 return;
@@ -298,7 +298,7 @@ export class ComposeTrackingCoordinator {
     async saveServiceLinks(service: string, links: ServiceLink[]): Promise<void> {
         const workspaceRoot = this.getWorkspaceRoot();
         if (!workspaceRoot) {
-            vscode.window.showWarningMessage('Compose Visual: open a workspace folder to save service links.');
+            vscode.window.showWarningMessage('DockerComposeVisualizer: open a workspace folder to save service links.');
             return;
         }
         try {
@@ -306,7 +306,7 @@ export class ComposeTrackingCoordinator {
             this.refreshServiceLinks();
         } catch (err) {
             const message = err instanceof Error ? err.message : String(err);
-            vscode.window.showErrorMessage(`Compose Visual: failed to save service links: ${message}`);
+            vscode.window.showErrorMessage(`DockerComposeVisualizer: failed to save service links: ${message}`);
         }
     }
 
@@ -316,7 +316,7 @@ export class ComposeTrackingCoordinator {
             this.refreshSidebarSettings();
         } catch (err) {
             const message = err instanceof Error ? err.message : String(err);
-            vscode.window.showErrorMessage(`Compose Visual: failed to save settings: ${message}`);
+            vscode.window.showErrorMessage(`DockerComposeVisualizer: failed to save settings: ${message}`);
         }
     }
 
@@ -328,13 +328,13 @@ export class ComposeTrackingCoordinator {
         const workspaceRoot = this.getWorkspaceRoot();
         const composePath = this.pendingComposeFile;
         if (!workspaceRoot || !composePath) {
-            vscode.window.showWarningMessage('Compose Visual: select a compose file first.');
+            vscode.window.showWarningMessage('DockerComposeVisualizer: select a compose file first.');
             this.webviewProvider?.postComposeRunUi({ spinning: false, showTerminal: false });
             return;
         }
         if (!isShowComposeRunButtonEnabled()) {
             vscode.window.showWarningMessage(
-                'Compose Visual: enable the Run button first (Add run button in the sidebar).'
+                'DockerComposeVisualizer: enable the Run button first (Add run button in the sidebar).'
             );
             this.webviewProvider?.postComposeRunUi({ spinning: false, showTerminal: false });
             return;
@@ -350,7 +350,7 @@ export class ComposeTrackingCoordinator {
                 result = runComposeUpInHiddenTerminal(composePath, extraArgs);
             } catch (err) {
                 const message = err instanceof Error ? err.message : String(err);
-                vscode.window.showErrorMessage(`Compose Visual: failed to start compose: ${message}`);
+                vscode.window.showErrorMessage(`DockerComposeVisualizer: failed to start compose: ${message}`);
                 return;
             }
 
@@ -379,7 +379,7 @@ export class ComposeTrackingCoordinator {
     showComposeTerminal(): void {
         if (!this.trackedComposeTerminal) {
             vscode.window.showWarningMessage(
-                'Compose Visual: no compose terminal yet. Use Run to start docker compose up.'
+                'DockerComposeVisualizer: no compose terminal yet. Use Run to start docker compose up.'
             );
             return;
         }
@@ -389,7 +389,7 @@ export class ComposeTrackingCoordinator {
     async stopComposeStack(): Promise<void> {
         const tree = this.activeTree;
         if (!tree || !this.activeTracker) {
-            vscode.window.showWarningMessage('Compose Visual: nothing is running to stop.');
+            vscode.window.showWarningMessage('DockerComposeVisualizer: nothing is running to stop.');
             return;
         }
         if (this.composeStopInFlight) {
@@ -404,10 +404,10 @@ export class ComposeTrackingCoordinator {
             for (const delayMs of [1200, 3000, 5500]) {
                 setTimeout(() => this.activeTracker?.reconcileNow(), delayMs);
             }
-            vscode.window.setStatusBarMessage('Compose Visual: stopping stack…', 3000);
+            vscode.window.setStatusBarMessage('DockerComposeVisualizer: stopping stack…', 3000);
         } catch (err) {
             const message = err instanceof Error ? err.message : String(err);
-            vscode.window.showErrorMessage(`Compose Visual: failed to stop stack: ${message}`);
+            vscode.window.showErrorMessage(`DockerComposeVisualizer: failed to stop stack: ${message}`);
         } finally {
             this.composeStopInFlight = false;
         }
@@ -418,7 +418,7 @@ export class ComposeTrackingCoordinator {
     async trackWorkspaceInteractively(): Promise<void> {
         const workspaceRoot = this.getWorkspaceRoot();
         if (!workspaceRoot) {
-            vscode.window.showWarningMessage('Compose Visual: open a workspace folder first.');
+            vscode.window.showWarningMessage('DockerComposeVisualizer: open a workspace folder first.');
             return;
         }
 
@@ -438,7 +438,7 @@ export class ComposeTrackingCoordinator {
                         action: 'pick' as const,
                     },
                 ],
-                { title: 'Compose Visual', placeHolder: 'How do you want to track?' }
+                { title: 'DockerComposeVisualizer', placeHolder: 'How do you want to track?' }
             );
             if (!pick) {
                 return;
@@ -466,7 +466,7 @@ export class ComposeTrackingCoordinator {
     }
 
     async focusSidebar(): Promise<void> {
-        await vscode.commands.executeCommand('workbench.view.extension.compose-visual-sidebar');
+        await vscode.commands.executeCommand('workbench.view.extension.docker-compose-visualizer-sidebar');
         await vscode.commands.executeCommand(`${(await import('../providers/ComposeWebviewProvider')).ComposeWebviewProvider.viewId}.focus`);
     }
 
@@ -572,7 +572,7 @@ export class ComposeTrackingCoordinator {
                 await saveSelectedComposeFile(workspaceRoot, composePath);
             } catch (err) {
                 const message = err instanceof Error ? err.message : String(err);
-                vscode.window.showWarningMessage(`Compose Visual: could not save compose file to settings: ${message}`);
+                vscode.window.showWarningMessage(`DockerComposeVisualizer: could not save compose file to settings: ${message}`);
             }
         }
 
@@ -601,7 +601,7 @@ export class ComposeTrackingCoordinator {
             extraArgs,
             commandPreview: buildComposeUpCommand(composePath, extraArgs),
         });
-        this.statusBar.setTooltip(`Compose Visual — ${path.basename(composePath)} · click to open sidebar`);
+        this.statusBar.setTooltip(`DockerComposeVisualizer — ${path.basename(composePath)} · click to open sidebar`);
         this.refreshServiceLinks();
     }
 
@@ -704,7 +704,7 @@ export class ComposeTrackingCoordinator {
 
         this.statusBar.setTracking(tree);
         this.statusBar.update(this.serviceStates, tree, 0, tree.totalServices);
-        vscode.window.setStatusBarMessage(`Compose Visual: tracking ${path.basename(composePath)}`, 4000);
+        vscode.window.setStatusBarMessage(`DockerComposeVisualizer: tracking ${path.basename(composePath)}`, 4000);
 
         this.activeTracker = new DockerEventTracker(tree.projectName, {
             onServiceState: (service, state) => {
@@ -727,7 +727,7 @@ export class ComposeTrackingCoordinator {
             },
             onError: (message) => {
                 this.outputChannel.appendLine(`[error] ${message}`);
-                vscode.window.showErrorMessage(`Compose Visual: ${message}`);
+                vscode.window.showErrorMessage(`DockerComposeVisualizer: ${message}`);
             },
             onDockerUnavailable: () => {
                 this.statusBar.setDockerOffline();
@@ -765,7 +765,7 @@ export class ComposeTrackingCoordinator {
             this.webviewProvider?.postIdle();
         }
         this.outputChannel.appendLine(`[tracking error] ${message}`);
-        vscode.window.showErrorMessage(`Compose Visual: ${message}`);
+        vscode.window.showErrorMessage(`DockerComposeVisualizer: ${message}`);
     }
 
     private async resolveProjectNameViaDocker(composePath: string): Promise<string | undefined> {

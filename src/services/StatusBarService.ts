@@ -44,7 +44,7 @@ export class StatusBarService {
         this.item.text = '$(layers) Compose  ░░░░░░░░░░░░  idle';
         this.item.color = undefined;
         this.item.backgroundColor = undefined;
-        this.item.tooltip = 'Compose Visual — click to choose a compose file';
+        this.item.tooltip = 'DockerComposeVisualizer — click to choose a compose file';
         this.item.command = 'composeVisual.statusBarClick';
     }
 
@@ -53,8 +53,8 @@ export class StatusBarService {
         this.item.color = new vscode.ThemeColor('charts.blue');
         this.item.backgroundColor = undefined;
         this.item.tooltip = composeFile
-            ? `Compose Visual — initializing (${composeFile})`
-            : 'Compose Visual — initializing';
+            ? `DockerComposeVisualizer — initializing (${composeFile})`
+            : 'DockerComposeVisualizer — initializing';
     }
 
     setError(message: string): void {
@@ -119,7 +119,7 @@ export class StatusBarService {
             if (isNotifyWhenStackReadyEnabled() && !this.stackReadyNotified) {
                 this.stackReadyNotified = true;
                 vscode.window.showInformationMessage(
-                    `Compose Visual: all ${totalServices} services are up (${tree.projectName}).`
+                    `DockerComposeVisualizer: all ${totalServices} services are up (${tree.projectName}).`
                 );
             }
         } else if (hasErrors) {

@@ -1,13 +1,17 @@
 {
-    "name": "compose-visual",
-    "displayName": "Compose Visual",
+    "name": "docker-compose-visualizer",
+    "displayName": "DockerComposeVisualizer",
     "description": "Track your docker-compose lifecycle via a dependency tree and status bar.",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "license": "SEE LICENSE IN LICENSE",
     "author": {
         "name": "Hadi Hajihosseini"
     },
-    "publisher": "hadi-hajihosseini",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hadiMh/Compose-Visual-VsCode-Extension.git"
+    },
+    "publisher": "HadiHajihosseini",
     "engines": {
         "vscode": "^1.93.0"
     },
@@ -33,14 +37,14 @@
         "viewsContainers": {
             "activitybar": [
                 {
-                    "id": "compose-visual-sidebar",
-                    "title": "Compose Visual",
+                    "id": "docker-compose-visualizer-sidebar",
+                    "title": "DockerComposeVisualizer",
                     "icon": "$(graph)"
                 }
             ]
         },
         "views": {
-            "compose-visual-sidebar": [
+            "docker-compose-visualizer-sidebar": [
                 {
                     "type": "webview",
                     "id": "composeVisual.treeView",
@@ -49,7 +53,7 @@
             ]
         },
         "configuration": {
-            "title": "Compose Visual",
+            "title": "DockerComposeVisualizer",
             "properties": {
                 "composeVisual.autoTrackOnComposeUp": {
                     "type": "boolean",
@@ -237,7 +241,7 @@
                     "default": 100,
                     "minimum": 0,
                     "maximum": 1000,
-                    "description": "Priority of the Compose Visual status bar item (higher values appear further left).",
+                    "description": "Priority of the DockerComposeVisualizer status bar item (higher values appear further left).",
                     "order": 51
                 },
                 "composeVisual.notifyWhenStackReady": {
@@ -263,33 +267,33 @@
         "commands": [
             {
                 "command": "composeVisual.statusBarClick",
-                "title": "Compose Visual: Open or Track",
-                "category": "Compose Visual"
+                "title": "DockerComposeVisualizer: Open or Track",
+                "category": "DockerComposeVisualizer"
             },
             {
                 "command": "composeVisual.focusSidebar",
-                "title": "Compose Visual: Open Sidebar",
-                "category": "Compose Visual"
+                "title": "DockerComposeVisualizer: Open Sidebar",
+                "category": "DockerComposeVisualizer"
             },
             {
                 "command": "composeVisual.openSettings",
-                "title": "Compose Visual: Open Settings",
-                "category": "Compose Visual"
+                "title": "DockerComposeVisualizer: Open Settings",
+                "category": "DockerComposeVisualizer"
             },
             {
                 "command": "composeVisual.trackWorkspace",
-                "title": "Compose Visual: Track Compose Stack",
-                "category": "Compose Visual"
+                "title": "DockerComposeVisualizer: Track Compose Stack",
+                "category": "DockerComposeVisualizer"
             },
             {
                 "command": "composeVisual.trackRunningStack",
-                "title": "Compose Visual: Track Running Stack",
-                "category": "Compose Visual"
+                "title": "DockerComposeVisualizer: Track Running Stack",
+                "category": "DockerComposeVisualizer"
             },
             {
                 "command": "composeVisual.stopTracking",
-                "title": "Compose Visual: Stop Tracking",
-                "category": "Compose Visual"
+                "title": "DockerComposeVisualizer: Stop Tracking",
+                "category": "DockerComposeVisualizer"
             }
         ]
     },

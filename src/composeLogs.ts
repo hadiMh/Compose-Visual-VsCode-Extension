@@ -10,7 +10,7 @@ export interface ComposeLogsOptions {
     projectName: string;
 }
 
-const LOGS_TERMINAL_PREFIX = 'Compose Visual · ';
+const LOGS_TERMINAL_PREFIX = 'DockerComposeVisualizer · ';
 
 /** Resolve the container ID for a compose service in the tracked project. */
 export async function resolveComposeServiceContainerId(

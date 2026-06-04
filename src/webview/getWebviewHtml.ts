@@ -14,7 +14,7 @@ export function getWebviewHtml(webview: vscode.Webview): string {
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="${csp}" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compose Visual</title>
+  <title>DockerComposeVisualizer</title>
   <style>
 :root {
   --node-min: 128px;
@@ -1281,7 +1281,7 @@ body.is-bootstrap-loading .sidebar-footer {
     <button type="button" class="header-icon-btn header-transport-btn stop-btn" id="stop-compose-btn" title="Stop all services (docker compose down)" aria-label="Stop compose stack">
       <svg class="icon-lucide icon-lucide-fill" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
     </button>
-    <button type="button" class="header-icon-btn" id="open-settings-btn" title="Compose Visual settings" aria-label="Open Compose Visual settings">
+    <button type="button" class="header-icon-btn" id="open-settings-btn" title="DockerComposeVisualizer settings" aria-label="Open DockerComposeVisualizer settings">
       <svg class="icon-lucide icon-lucide-stroke" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <circle cx="12" cy="12" r="3"/>
         <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
@@ -1297,7 +1297,7 @@ body.is-bootstrap-loading .sidebar-footer {
 <div id="empty">
   <div id="empty-loading" aria-live="polite">
     <div class="bootstrap-spinner" aria-hidden="true"></div>
-    <p class="empty-title">Loading Compose Visual</p>
+    <p class="empty-title">Loading DockerComposeVisualizer</p>
     <p id="empty-loading-detail" class="empty-hint">Preparing your visual dependency tree…</p>
   </div>
   <div id="empty-pick" hidden>
@@ -1330,7 +1330,7 @@ body.is-bootstrap-loading .sidebar-footer {
 <span class="l-error">Error</span>
 </div>
   </div>
-  <section id="settings-view" aria-label="Compose Visual settings">
+  <section id="settings-view" aria-label="DockerComposeVisualizer settings">
 <p class="settings-hint settings-persist-hint">Preferences are saved in <code>.composeVisual/sidebar-settings.json</code> in this workspace.</p>
 <div class="settings-section">
   <h3>Run stack</h3>
@@ -1512,7 +1512,7 @@ function setEmptyBootstrapPhase(phase, data) {
   if (phase === 'pick') {
     metaEl.textContent = 'Select a compose file or run docker compose up.';
   } else if (phase === 'loading') {
-    metaEl.textContent = 'Loading Compose Visual…';
+    metaEl.textContent = 'Loading DockerComposeVisualizer…';
     progressFill.style.width = '0%';
   }
   syncTransportControls();
@@ -2132,7 +2132,7 @@ function showSettingsView() {
   if (settingsView) settingsView.classList.add('is-visible');
   if (headerTitle) headerTitle.textContent = 'Settings';
   if (openSettingsBtn) openSettingsBtn.classList.add('is-active');
-  if (metaEl) metaEl.textContent = 'Configure Compose Visual, then click Save.';
+  if (metaEl) metaEl.textContent = 'Configure DockerComposeVisualizer, then click Save.';
 }
 
 function showMainView() {
