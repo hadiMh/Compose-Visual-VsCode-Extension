@@ -5,6 +5,8 @@
 > See your **docker compose** stack boot in dependency order — live health, ports, and logs — inside VS Code and Cursor.
 > 
 <img width="1920" height="1080" alt="running_with_terminal" src="https://github.com/user-attachments/assets/1d3480a1-fdd7-4f47-b751-30bb56078a2f" style="width: 100%; max-width: 1920px; height: auto;" />
+>
+> *Live dependency tiers, per-service health and ports, status-bar progress, and auto-tracked `docker compose up` in the integrated terminal.*
 
 Stop guessing which service is blocking the rest. **DockerComposeVisualizer** parses your compose file, lays out services by dependency tier, and updates each card as containers move through creating → starting → healthcheck → healthy. Dependencies light up when their parents are ready, so you can see *why* something is still waiting.
 
@@ -37,18 +39,34 @@ Works in **Visual Studio Code** (1.93+) and **Cursor**.
 - **Auto-discover running stacks** — Polls `docker compose ls` and attaches when a stack for your workspace is already up.
 - **Status bar progress** — Segmented bar showing how many services have reached your configured “up” state.
 
-<img width="328" height="24" alt="Screenshot 1405-03-13 at 23 21 22" src="https://github.com/user-attachments/assets/95e77b2f-c85a-427f-8f8c-18a2111f187c" />
+<div style="padding-left: 24px;">
+<img width="328" height="24" alt="Custom service links on a service card" src="https://github.com/user-attachments/assets/95e77b2f-c85a-427f-8f8c-18a2111f187c" />
+<p><em>Status bar while running up command</em></p>
 <br/>
-<img width="328" height="24" alt="Screenshot 1405-03-13 at 23 43 26" src="https://github.com/user-attachments/assets/7bdf5d92-95d5-4faf-b718-5b49c209276d" />
+<img width="328" height="24" alt="Auto-detected port links on a service card" src="https://github.com/user-attachments/assets/7bdf5d92-95d5-4faf-b718-5b49c209276d" />
+<p><em>Status bar when the containers are running correctly</em></p>
+</div>
 
 - **One-click logs** — Open `docker logs -f` for a service in a dedicated terminal (reused per service by default).
 
 
 - **Port & link buttons** — Open published ports on localhost; configure custom URLs per service.
 
-<img width="151" height="164" alt="Screenshot 1405-03-13 at 23 19 23" src="https://github.com/user-attachments/assets/85952373-e71a-4766-807d-359fd20800be" />
-<img width="153" height="149" alt="Screenshot 1405-03-13 at 23 51 47" src="https://github.com/user-attachments/assets/adc2e6bf-267f-417a-881c-df08382551b3" />
 
+
+
+<div align="center" style="margin: 24px 0;">
+  <div style="display: inline-flex; justify-content: center; align-items: flex-start; gap: 64px; padding: 16px 48px;">
+    <div style="text-align: center;">
+      <img width="151" height="164" alt="Custom service links on a service card" src="https://github.com/user-attachments/assets/85952373-e71a-4766-807d-359fd20800be" />
+      <p><em>Custom service links</em></p>
+    </div>
+    <div style="text-align: center;">
+      <img width="153" height="149" alt="Auto-detected port links on a service card" src="https://github.com/user-attachments/assets/adc2e6bf-267f-417a-881c-df08382551b3" />
+      <p><em>Auto-detected port links</em></p>
+    </div>
+  </div>
+</div>
 - **Boot timer** — Optional per-card timer from “deps ready” until healthy.
 - **Run / Stop (optional)** — Start or stop the stack from the sidebar without leaving the editor.
 - **Sidebar settings** — Grid columns, legend, logs button, dependency list, and more — saved per workspace.
