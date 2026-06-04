@@ -1,16 +1,34 @@
+# Dev / editor
 .vscode/**
 .vscode-test/**
-node_modules/**
-src/**
-.git/**
-.github/**
 .claude/**
 .cursor/**
+.github/**
+
+# Git & repo metadata (not needed at runtime)
+.git/**
+.gitignore
+
+# Source & build config (compiled output lives in out/)
+src/**
 *.ts
-!out/**
 tsconfig.json
-**/*.map
-**/.DS_Store
-**/*.vsix
+
+# Runtime deps: exclude all of node_modules, then allow production packages only.
+# vsce uses npm list --production; without the ! lines, js-yaml would be stripped.
+node_modules/**
+!node_modules/js-yaml/**
+!node_modules/argparse/**
+
+# Compiled extension — JS only (no source maps in the published VSIX)
+out/**
+!out/**/*.js
+
+# Local marketplace / promo scratch
+publish media/**
+
+# Workspace / secrets / packaging artifacts
 .env*
 .composeVisual/**
+**/*.vsix
+**/.DS_Store
