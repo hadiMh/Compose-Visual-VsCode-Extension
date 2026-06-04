@@ -1,5 +1,5 @@
 {
-    "name": "docker-compose-visualizer",
+    "name": "dockercompose-visualizer",
     "displayName": "DockerComposeVisualizer",
     "description": "Track your docker-compose lifecycle via a dependency tree and status bar.",
     "version": "1.0.0",

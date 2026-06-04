@@ -1,6 +1,24 @@
 # DockerComposeVisualizer
 
-**Created by Hadi Hajihosseini.**
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=HadiHajihosseini.dockercompose-visualizer">
+    <img alt="Install DockerComposeVisualizer in VS Code" src="https://img.shields.io/badge/Install%20in-VS%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=HadiHajihosseini.dockercompose-visualizer">
+    <img alt="Visual Studio Marketplace version" src="https://img.shields.io/visual-studio-marketplace/v/HadiHajihosseini.dockercompose-visualizer?label=Version&color=007ACC">
+  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=HadiHajihosseini.dockercompose-visualizer">
+    <img alt="Visual Studio Marketplace installs" src="https://img.shields.io/visual-studio-marketplace/i/HadiHajihosseini.dockercompose-visualizer?label=Installs&color=007ACC">
+  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=HadiHajihosseini.dockercompose-visualizer">
+    <img alt="Visual Studio Marketplace rating" src="https://img.shields.io/visual-studio-marketplace/r/HadiHajihosseini.dockercompose-visualizer?label=Rating&color=007ACC">
+  </a>
+</p>
+
+<p align="center"><strong>Created by Hadi Hajihosseini.</strong></p>
 
 > See your **docker compose** stack boot in dependency order — live health, ports, and logs — inside VS Code and Cursor.
 > 
@@ -86,7 +104,7 @@ Works in **Visual Studio Code** (1.93+) and **Cursor**.
 
 ## Getting started
 
-1. **Install** the extension (from the marketplace when published, or see [Development](#development) to run from source).
+1. **[Install](https://marketplace.visualstudio.com/items?itemName=HadiHajihosseini.dockercompose-visualizer)** the extension from the VS Code Marketplace (or see [Development](#development) to run from source).
 2. **Open a workspace** that contains your compose YAML.
 3. Open the **DockerComposeVisualizer** view on the activity bar (graph icon).
 4. **Pick a compose file** if prompted, or run your stack:
