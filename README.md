@@ -36,6 +36,7 @@ Works in **Visual Studio Code** (1.93+) and **Cursor**.
 
 - [Features](#features)
 - [Requirements](#requirements)
+- [Installation](#installation)
 - [Getting started](#getting-started)
 - [How it works](#how-it-works)
 - [Commands](#commands)
@@ -102,9 +103,67 @@ Works in **Visual Studio Code** (1.93+) and **Cursor**.
 
 ---
 
+## Installation
+
+Works in **VS Code** (1.93+) and **Cursor**. Pick one of the options below.
+
+### 1. Install from the Marketplace
+
+The easiest way — search in the editor or use the badge at the top of this page.
+
+1. Open **Extensions** (`Ctrl+Shift+X` / `Cmd+Shift+X`).
+2. Search for **DockerComposeVisualizer**.
+3. Click **Install**.
+
+Or open the listing directly: [DockerComposeVisualizer on the VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=HadiHajihosseini.dockercompose-visualizer).
+
+### 2. Install from the terminal
+
+Install the published extension by ID (requires the `code` or `cursor` CLI on your `PATH`):
+
+**VS Code**
+
+```bash
+code --install-extension HadiHajihosseini.dockercompose-visualizer
+```
+
+**Cursor**
+
+```bash
+cursor --install-extension HadiHajihosseini.dockercompose-visualizer
+```
+
+To install a specific version:
+
+```bash
+code --install-extension HadiHajihosseini.dockercompose-visualizer@1.0.1
+```
+
+### 3. Install from a VSIX (GitHub Releases)
+
+Use this for offline installs, pinned versions, or testing a release before it appears on the Marketplace.
+
+1. Open [GitHub Releases](https://github.com/hadiMh/Compose-Visual-VsCode-Extension/releases).
+2. Download the `.vsix` for the version you want (e.g. `dockercompose-visualizer-1.0.1.vsix`).
+3. Install it:
+
+   **From the terminal**
+
+   ```bash
+   code --install-extension /path/to/dockercompose-visualizer-1.0.1.vsix
+   ```
+
+   **From the UI** — Command Palette → **Extensions: Install from VSIX…** → select the downloaded file.
+
+   On Cursor, use `cursor --install-extension` or **Extensions: Install from VSIX…** the same way.
+
+After installing, reload the window if prompted (`Developer: Reload Window`).
+
+---
+
 ## Getting started
 
-1. **[Install](https://marketplace.visualstudio.com/items?itemName=HadiHajihosseini.dockercompose-visualizer)** the extension from the VS Code Marketplace (or see [Development](#development) to run from source).
+1. **Install** the extension using one of the methods in [Installation](#installation) (or see [Development](#development) to run from source).
 2. **Open a workspace** that contains your compose YAML.
 3. Open the **DockerComposeVisualizer** view on the activity bar (graph icon).
 4. **Pick a compose file** if prompted, or run your stack:
