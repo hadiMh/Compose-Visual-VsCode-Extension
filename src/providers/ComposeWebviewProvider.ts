@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { hasUserRatedExtension } from '../extensionRating';
 import { getWebviewSettings } from '../settings';
 import { getWebviewHtml } from '../webview/getWebviewHtml';
 import type {
@@ -31,6 +32,7 @@ export class ComposeWebviewProvider implements vscode.WebviewViewProvider {
 
     constructor(
         private readonly _extensionUri: vscode.Uri,
+        private readonly _context: vscode.ExtensionContext,
         private readonly _handlers: WebviewEventHandlers
     ) {}
 
@@ -75,9 +77,13 @@ export class ComposeWebviewProvider implements vscode.WebviewViewProvider {
         webviewView.webview.onDidReceiveMessage((message: WebviewInboundMessage) => {
             if (message.type === 'webview-ready') {
                 this.postSettings();
+                this.postExtensionUi();
                 this._handlers.onWebviewReady();
                 this.flushCachedState();
                 return;
+            }
+            if (message.type === 'rate-extension') {
+                this._handlers.onRateExtension();
             }
             if (message.type === 'open-logs' && message.service) {
                 this._handlers.onOpenLogs(message.service);
@@ -257,5 +263,19 @@ export class ComposeWebviewProvider implements vscode.WebviewViewProvider {
 
     postSettings(): void {
         this.post({ type: 'settings', data: getWebviewSettings() });
+    }
+
+    postExtensionUi(): void {
+        this.post({
+            type: 'extension-ui',
+            data: { showRateButton: !hasUserRatedExtension(this._context) },
+        });
+    }
+
+    hideRateExtensionButton(): void {
+        this.post({
+            type: 'extension-ui',
+            data: { showRateButton: false },
+        });
     }
 }

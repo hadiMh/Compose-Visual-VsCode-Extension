@@ -177,12 +177,83 @@ header h2 {
 .header-show-terminal-btn.is-visible {
   display: inline-flex;
 }
+.header-compose-bar {
+  flex-shrink: 0;
+  padding: 0 10px 12px;
+}
+.header-compose-bar[hidden] {
+  display: none !important;
+}
+.header-compose-btn {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0;
+}
 .sidebar-footer {
   flex-shrink: 0;
   margin-top: auto;
   padding: 10px 10px 12px;
   border-top: 1px solid var(--vscode-widget-border, var(--connector));
   background: var(--vscode-sideBar-background);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sidebar-footer[hidden] {
+  display: none !important;
+}
+.rate-extension-btn {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  line-height: 1.25;
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, #e84393 88%, var(--glow-red, #f48771)) 0%,
+    color-mix(in srgb, #fd79a8 75%, var(--glow-orange, #ce9178)) 45%,
+    color-mix(in srgb, #a29bfe 70%, var(--glow-blue, #3794ff)) 100%
+  );
+  border: 1px solid color-mix(in srgb, #fff 18%, transparent);
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow:
+    0 2px 10px color-mix(in srgb, #e84393 28%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 22%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+}
+.rate-extension-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 5px 18px color-mix(in srgb, #e84393 38%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent);
+}
+.rate-extension-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+.rate-extension-btn[hidden],
+.footer-compose-btn[hidden] {
+  display: none !important;
+}
+.rate-heart {
+  font-size: 15px;
+  line-height: 1;
+  animation: rate-heartbeat 1.35s ease-in-out infinite;
+}
+@keyframes rate-heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.18); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
 }
 .footer-compose-btn {
   width: 100%;
@@ -320,7 +391,8 @@ header h2 {
   color: var(--glow-blue);
   font-weight: 600;
 }
-body.is-bootstrap-loading .sidebar-footer {
+body.is-bootstrap-loading .sidebar-footer,
+body.is-bootstrap-loading .header-compose-bar {
   visibility: hidden;
   pointer-events: none;
 }
@@ -385,9 +457,21 @@ body.is-bootstrap-loading .sidebar-footer {
   flex-shrink: 0;
 }
 .pick-compose-btn.is-loading .compose-pick-spinner,
-.footer-compose-btn.is-loading .compose-pick-spinner {
+.footer-compose-btn.is-loading .compose-pick-spinner,
+.header-compose-btn.is-loading .compose-pick-spinner {
   display: inline-block;
   animation: spin 0.65s linear infinite;
+}
+.pick-compose-btn svg,
+.header-compose-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .footer-compose-btn.is-loading svg {
   display: none;
@@ -1292,6 +1376,16 @@ body.is-bootstrap-loading .sidebar-footer {
 <div class="meta" id="meta">Run <code>docker compose up</code> to begin tracking.</div>
 <div class="progress-strip" id="progress-strip"><div class="progress-fill" id="progress-fill"></div></div>
   </header>
+  <div class="header-compose-bar" id="header-compose-bar" hidden>
+    <button type="button" class="pick-compose-btn header-compose-btn" id="pick-compose-top-btn" title="Choose a compose YAML file to track" aria-label="Choose YAML file" aria-busy="false">
+      <span class="compose-pick-spinner" aria-hidden="true"></span>
+      <svg class="icon-lucide icon-lucide-stroke" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+        <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+      </svg>
+      <span class="pick-compose-label">Choose YAML file</span>
+    </button>
+  </div>
   <div id="main-view">
 <div id="error-banner"></div>
 <div id="empty">
@@ -1302,19 +1396,12 @@ body.is-bootstrap-loading .sidebar-footer {
   </div>
   <div id="empty-pick" hidden>
     <p class="empty-title">No compose file selected</p>
-    <p class="empty-hint">Pick a <code>docker-compose.yml</code> (or dev variant) to show the dependency tree, or run <code>docker compose up</code> in a terminal to auto-track.</p>
-    <button type="button" class="pick-compose-btn" id="pick-compose-btn" aria-busy="false">
-      <span class="compose-pick-spinner" aria-hidden="true"></span>
-      <span class="pick-compose-label">Choose compose file…</span>
-    </button>
+    <p class="empty-hint">Use <strong>Choose YAML file</strong> above to pick a <code>docker-compose.yml</code> (or dev variant), or run <code>docker compose up</code> in a terminal to auto-track.</p>
   </div>
   <div id="empty-failed" hidden>
     <p class="empty-title">Compose file not found</p>
     <p class="empty-hint" id="empty-failed-msg"></p>
-    <button type="button" class="pick-compose-btn" id="pick-compose-btn-retry" aria-busy="false">
-      <span class="compose-pick-spinner" aria-hidden="true"></span>
-      <span class="pick-compose-label">Choose compose file…</span>
-    </button>
+    <p class="empty-hint">Use <strong>Choose YAML file</strong> above to select another compose file.</p>
   </div>
 </div>
 <div id="tree-stage" class="tree-stage" hidden>
@@ -1439,15 +1526,19 @@ body.is-bootstrap-loading .sidebar-footer {
   </div>
 </div>
   </div>
-  <footer class="sidebar-footer">
-<button type="button" class="footer-compose-btn" id="change-compose-btn" title="Choose a compose YAML file to track" aria-busy="false">
-  <span class="compose-pick-spinner" aria-hidden="true"></span>
-  <svg class="icon-lucide icon-lucide-stroke" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
-    <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
-  </svg>
-  <span class="change-compose-label" id="change-compose-label">Select YAML file</span>
-</button>
+  <footer class="sidebar-footer" id="sidebar-footer" hidden>
+    <button type="button" class="rate-extension-btn" id="rate-extension-btn" title="Rate DockerComposeVisualizer on the VS Code Marketplace" aria-label="Rate this extension on the Marketplace" hidden>
+      <span class="rate-heart" aria-hidden="true">❤️</span>
+      <span>Please rate this extension</span>
+    </button>
+    <button type="button" class="footer-compose-btn" id="change-compose-btn" title="Choose a different compose YAML file" aria-label="Change YAML file" aria-busy="false" hidden>
+      <span class="compose-pick-spinner" aria-hidden="true"></span>
+      <svg class="icon-lucide icon-lucide-stroke" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+        <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+      </svg>
+      <span class="change-compose-label" id="change-compose-label">Change YAML file</span>
+    </button>
   </footer>
   <script nonce="${nonce}">
 const vscode = acquireVsCodeApi();
@@ -1465,8 +1556,8 @@ const openSettingsBtn = document.getElementById('open-settings-btn');
 const runComposeHeaderBtn = document.getElementById('run-compose-header-btn');
 const showComposeTerminalBtn = document.getElementById('show-compose-terminal-btn');
 const stopComposeBtn = document.getElementById('stop-compose-btn');
-const pickComposeBtn = document.getElementById('pick-compose-btn');
-const pickComposeRetryBtn = document.getElementById('pick-compose-btn-retry');
+const pickComposeTopBtn = document.getElementById('pick-compose-top-btn');
+const headerComposeBar = document.getElementById('header-compose-bar');
 const emptyLoadingEl = document.getElementById('empty-loading');
 const emptyPickEl = document.getElementById('empty-pick');
 const emptyFailedEl = document.getElementById('empty-failed');
@@ -1474,6 +1565,8 @@ const emptyLoadingDetail = document.getElementById('empty-loading-detail');
 const emptyFailedMsg = document.getElementById('empty-failed-msg');
 const changeComposeBtn = document.getElementById('change-compose-btn');
 const changeComposeLabel = document.getElementById('change-compose-label');
+const sidebarFooter = document.getElementById('sidebar-footer');
+const rateExtensionBtn = document.getElementById('rate-extension-btn');
 const settingShowRun = document.getElementById('setting-show-run');
 const settingsRunDetails = document.getElementById('settings-run-details');
 const settingsRunPreview = document.getElementById('settings-run-preview');
@@ -1481,16 +1574,20 @@ const settingComposeArgs = document.getElementById('setting-compose-args');
 let settingsViewOpen = false;
 let lastSettingsData = null;
 let hasComposeFileSelected = false;
+let showRateExtensionButton = true;
+let bootstrapPhase = 'loading';
 const STOP_VISIBLE_STATES = ['creating', 'starting', 'running', 'healthcheck', 'healthy'];
 
 function setEmptyBootstrapPhase(phase, data) {
   if (!emptyEl) return;
+  bootstrapPhase = phase === 'hidden' ? (hasComposeFileSelected ? 'hidden' : 'pick') : phase;
   document.body.classList.toggle('is-bootstrap-loading', phase === 'loading');
   if (phase === 'hidden') {
     emptyEl.hidden = true;
     if (emptyLoadingEl) emptyLoadingEl.hidden = true;
     if (emptyPickEl) emptyPickEl.hidden = true;
     if (emptyFailedEl) emptyFailedEl.hidden = true;
+    syncComposeFileUi();
     return;
   }
   emptyEl.hidden = false;
@@ -1516,18 +1613,32 @@ function setEmptyBootstrapPhase(phase, data) {
     progressFill.style.width = '0%';
   }
   syncTransportControls();
+  syncComposeFileUi();
 }
 
-function syncChangeComposeButton() {
-  if (!changeComposeBtn || !changeComposeLabel) return;
-  if (hasComposeFileSelected) {
-    changeComposeLabel.textContent = 'Change YAML file';
-    changeComposeBtn.title = 'Choose a different compose YAML file';
-    changeComposeBtn.setAttribute('aria-label', 'Change compose YAML file');
-  } else {
-    changeComposeLabel.textContent = 'Select YAML file';
-    changeComposeBtn.title = 'Choose a compose YAML file to track';
-    changeComposeBtn.setAttribute('aria-label', 'Select compose YAML file');
+function syncComposeFileUi() {
+  const isLoading = bootstrapPhase === 'loading' || document.body.classList.contains('is-bootstrap-loading');
+  const showTopPick = !hasComposeFileSelected && !isLoading && !settingsViewOpen;
+  const showFooterChange = hasComposeFileSelected && !settingsViewOpen;
+  const showRate = showRateExtensionButton && !settingsViewOpen && !isLoading;
+  const showFooter = showFooterChange || showRate;
+
+  if (headerComposeBar) {
+    headerComposeBar.hidden = !showTopPick;
+  }
+  if (changeComposeBtn) {
+    changeComposeBtn.hidden = !showFooterChange;
+    if (showFooterChange && changeComposeLabel) {
+      changeComposeLabel.textContent = 'Change YAML file';
+      changeComposeBtn.title = 'Choose a different compose YAML file';
+      changeComposeBtn.setAttribute('aria-label', 'Change YAML file');
+    }
+  }
+  if (rateExtensionBtn) {
+    rateExtensionBtn.hidden = !showRate;
+  }
+  if (sidebarFooter) {
+    sidebarFooter.hidden = !showFooter;
   }
 }
 const nodeEls = new Map();
@@ -2133,6 +2244,7 @@ function showSettingsView() {
   if (headerTitle) headerTitle.textContent = 'Settings';
   if (openSettingsBtn) openSettingsBtn.classList.add('is-active');
   if (metaEl) metaEl.textContent = 'Configure DockerComposeVisualizer, then click Save.';
+  syncComposeFileUi();
 }
 
 function showMainView() {
@@ -2146,6 +2258,7 @@ function showMainView() {
   } else {
     metaEl.textContent = 'Select a compose file or run docker compose up.';
   }
+  syncComposeFileUi();
 }
 
 function updateAllDependencies() {
@@ -2278,7 +2391,7 @@ function restoreTrackingSnapshot(data) {
     hideError();
   }
   hasComposeFileSelected = true;
-  syncChangeComposeButton();
+  syncComposeFileUi();
   renderTree(data.tree);
   const states = data.states || data.tree.states || {};
   applyServiceStatesMap(states);
@@ -2409,7 +2522,7 @@ function onComposeSelected(data) {
 }
 
 function setComposePickLoading(loading) {
-  [pickComposeBtn, pickComposeRetryBtn, changeComposeBtn].forEach(function(btn) {
+  [pickComposeTopBtn, changeComposeBtn].forEach(function(btn) {
     if (!btn) return;
     btn.classList.toggle('is-loading', !!loading);
     btn.setAttribute('aria-busy', loading ? 'true' : 'false');
@@ -2421,9 +2534,16 @@ function requestPickComposeFile(e) {
   setComposePickLoading(true);
   vscode.postMessage({ type: 'pick-compose-file' });
 }
-if (pickComposeBtn) pickComposeBtn.addEventListener('click', requestPickComposeFile);
-if (pickComposeRetryBtn) pickComposeRetryBtn.addEventListener('click', requestPickComposeFile);
+if (pickComposeTopBtn) pickComposeTopBtn.addEventListener('click', requestPickComposeFile);
 if (changeComposeBtn) changeComposeBtn.addEventListener('click', requestPickComposeFile);
+if (rateExtensionBtn) {
+  rateExtensionBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    showRateExtensionButton = false;
+    syncComposeFileUi();
+    vscode.postMessage({ type: 'rate-extension' });
+  });
+}
 if (stopComposeBtn) {
   stopComposeBtn.addEventListener('click', function(e) {
     e.preventDefault();
@@ -2907,9 +3027,13 @@ window.addEventListener('message', (event) => {
         setEmptyBootstrapPhase(msg.data.phase, msg.data);
       }
       break;
+    case 'extension-ui':
+      showRateExtensionButton = !!(msg.data && msg.data.showRateButton);
+      syncComposeFileUi();
+      break;
     case 'compose-selected':
       hasComposeFileSelected = true;
-      syncChangeComposeButton();
+      syncComposeFileUi();
       onComposeSelected(msg.data);
       hideError();
       setEmptyBootstrapPhase('hidden');
@@ -2944,7 +3068,8 @@ window.addEventListener('message', (event) => {
       break;
     case 'idle':
       hasComposeFileSelected = false;
-      syncChangeComposeButton();
+      bootstrapPhase = 'pick';
+      syncComposeFileUi();
       clearAllBootTimers();
       treePayload = null;
       nodeEls.clear();
@@ -2957,7 +3082,7 @@ window.addEventListener('message', (event) => {
   }
 });
 
-syncChangeComposeButton();
+syncComposeFileUi();
 setEmptyBootstrapPhase('loading');
 vscode.postMessage({ type: 'webview-ready' });
   </script>

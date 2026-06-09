@@ -3,13 +3,14 @@ import { ComposeWebviewProvider } from './providers/ComposeWebviewProvider';
 import { ComposeTrackingCoordinator } from './services/ComposeTrackingCoordinator';
 import { StatusBarService } from './services/StatusBarService';
 import { registerAllCommands } from './commands';
+import { openExtensionReviewPage } from './extensionRating';
 import { getStatusBarPriority } from './settings';
 
 export function activate(context: vscode.ExtensionContext): void {
     const statusBar = new StatusBarService(context, getStatusBarPriority());
     const coordinator = new ComposeTrackingCoordinator(context, statusBar);
 
-    const webviewProvider = new ComposeWebviewProvider(context.extensionUri, {
+    const webviewProvider = new ComposeWebviewProvider(context.extensionUri, context, {
         onOpenLogs:            (s) =>         void coordinator.openLogs(s),
         onPickComposeFile:     () =>           void coordinator.pickComposeFile(),
         onOpenLink:            (url, ext) =>   void coordinator.openLink(url, ext),
@@ -19,6 +20,12 @@ export function activate(context: vscode.ExtensionContext): void {
         onShowComposeTerminal: () =>           coordinator.showComposeTerminal(),
         onStopComposeStack:    () =>           void coordinator.stopComposeStack(),
         onWebviewReady:        () =>           void coordinator.onWebviewReady(),
+        onRateExtension: () => {
+            void (async () => {
+                await openExtensionReviewPage(context);
+                webviewProvider.hideRateExtensionButton();
+            })();
+        },
     });
 
     coordinator.setWebviewProvider(webviewProvider);

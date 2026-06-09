@@ -106,7 +106,8 @@ export type WebviewMessage =
     | { type: 'compose-pick-loading'; data: { loading: boolean } }
     | { type: 'compose-bootstrap'; data: ComposeBootstrapPayload }
     | { type: 'sync-states'; data: Record<string, ServiceNodeState> }
-    | { type: 'restore-tracking'; data: TrackingSnapshotPayload };
+    | { type: 'restore-tracking'; data: TrackingSnapshotPayload }
+    | { type: 'extension-ui'; data: { showRateButton: boolean } };
 
 export type ComposeBootstrapPhase = 'loading' | 'pick' | 'failed';
 
@@ -140,6 +141,7 @@ export interface WebviewEventHandlers {
     onShowComposeTerminal(): void;
     onStopComposeStack(): void;
     onWebviewReady(): void;
+    onRateExtension(): void;
 }
 
 export type WebviewInboundMessage =
@@ -151,4 +153,5 @@ export type WebviewInboundMessage =
     | { type: 'show-compose-terminal' }
     | { type: 'stop-compose-stack' }
     | { type: 'save-sidebar-settings'; data: WebviewSettingsPayload }
-    | { type: 'save-service-links'; service: string; links: ServiceLink[] };
+    | { type: 'save-service-links'; service: string; links: ServiceLink[] }
+    | { type: 'rate-extension' };
