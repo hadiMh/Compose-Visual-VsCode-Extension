@@ -2,7 +2,7 @@
     "name": "dockercompose-visualizer",
     "displayName": "DockerComposeVisualizer",
     "description": "Track your docker-compose lifecycle via a dependency tree and status bar.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "SEE LICENSE IN LICENSE",
     "author": {
         "name": "Hadi Hajihosseini"
